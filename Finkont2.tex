@@ -50,8 +50,8 @@
 \vfill
 \vspace{5mm}
 
-{\LARGE Felipe Santiago Aguirre Ram\'{i}rez}\\
 {\LARGE Richard Németh}\\
+{\LARGE Felipe Aguirre}\\
 
 \vspace{15mm}
 
@@ -120,9 +120,9 @@ h_1(t) &= \textbf{1}_{(S(t)>XP(t))},
 where $P(t)=e^{-r(T-t)}.$ The strategy basically says to borrow $X$ units from bank account and buy one stock in case we are at-the-money, otherwise do nothing. Being at-the-money basically means that we can only gain from the stock, thus the title of this strategy. The strategy seems to be self-financing, the value of the portfolio is non-negative and with positive probability can be positive, hence this strategy could be an arbitrage possibility in non-arbitrage market. Thus the big paradox.\\
 
 \vspace{0.2cm}
-Design and execute a simulation experiment that analyses the hedge performance of the stop-loss start-gain strategy for a call-option. Analyze the results. \\
+Design and execute a simulation experiment that analyzes the hedge performance of the stop-loss start-gain strategy for a call-option. Analyze the results. \\
 
-Why is the stop-loss start-gain strategy not a paradox; ``where does the rabbit go into the hat''? (You can argue based on insights from your simulation experiment and/or theoretically. Proposition 1 the paper deals with this matter. It uses the Ito-Tanaka(-Meyer) formula, which is beyond our sphere of knowledge -- as of now; Antoine will remedy that. However, you should be able to see what goes wrong when trying to prove the self-financing condition with the standard Ito formula.)
+Why is the stop-loss start-gain strategy \textit{not} a paradox; ``where does the rabbit go into the hat''? (You can argue based on insights from your simulation experiment and/or theoretically. Proposition 1 the paper deals with this matter. It uses the Ito-Tanaka(-Meyer) formula, which is beyond our sphere of knowledge -- as of now; Antoine will remedy that. However, you should be able to see what goes wrong when trying to prove the self-financing condition with the standard Ito formula.)
 
 \vspace{0.2cm}
 Computation:
@@ -202,14 +202,15 @@ $$\pi^{C}\left(t\right)=\sum_{i|T_i >t}\alpha_i P\left(t, T_i\right)$$
 
 Show that there exists a unique $r^{\ast} \in\mathbb{R}$ such that $\pi^{C}\left(T\right)\geq K$ if and only if $r\left(T\right)\leq r^{\ast}$.
 
-Define the adjusted strikes via $K_i = exp\left(A\left(T, T_i\right)-B\left(T, T_i\right)r^{\ast}\right)$
+Define the \textit{adjusted strikes} via $K_i = exp\left(A\left(T, T_i\right)-B\left(T, T_i\right)r^{\ast}\right)$
 
 Show that the pay-off of the call can be written as 
 
 $$\left(\pi^{C}\left(T\right)-K\right)^{+}=\sum_{i|T_i > T}\alpha_i\left(P\left(T,T_i\right)-K_i\right)^{+}$$
 
-and explain how (given results known from for instance Bjork) this leads to a closed-form (up to knowledge of $r^{\ast}$) expression for the price of the call on the coupon bond.
-Consider a option with $K = 4.5$, $T = 1$, $N = 5$, $T_i = i+1$, and $\alpha_i = 1$ for all $i$, and let other parameters be as in the previous exercise. Calculate the time-0 price of the call. (Numbers, please; this will involve solving an equation numerically.)
+and explain how (given results known from for instance Bjork) this leads to a closed-form (up to knowledge of $r^{\ast}$) expression for the price of the call on the coupon bond.\\
+
+Suppose the current short rate is $r_0=0.02$ and that the (Q-) parameters (in our ``drift $=k\left(\theta^{Q}-x\right)$''- notation) of the Vasicek model are $\theta^{Q}=0.05$, $k=0.1$, and $\sigma=0.015$. Consider a option with $K = 4.5$, $T = 1$, $N = 5$, $T_i = i+1$, and $\alpha_i = 1$ for all $i$, and let other parameters be as in the previous exercise. Calculate the time-0 price of the call. (Numbers, please; this will involve solving an equation numerically.)
 
 \vspace{0.2cm}
 Computation:
