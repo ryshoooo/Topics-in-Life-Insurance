@@ -1,0 +1,242 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{latexsym}
+\usepackage{a4wide}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{pstricks-add}
+\usepackage{pst-plot}
+\usepackage{pst-math}
+\usepackage{caption}
+\usepackage{mathrsfs}
+\usepackage{subcaption}
+\usepackage{kmath,kerkis}
+\renewcommand{\tan}{\mathrm{tg}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\hVec}[2]{\left(#1,#2\right)^T}
+\newcommand{\vVec}[2]{\left(\begin{array}{c}
+#1\\ #2
+\end{array}\right)}
+\newcommand{\prim}[3]{\left[#1\right]^{#2}_{#3}}
+\newcommand{\id}{\mathrm{id}}
+\frenchspacing
+\pagestyle{plain}
+\bibliographystyle{plainnat}
+\begin{document}
+\pagenumbering{gobble}
+\begin{center}
+
+%%% Titulní strana
+%%% Tato stránka se nepřekládá do slovenštiny!!
+
+{\large University of Copenhagen}
+
+\medskip
+{\large Faculty of SCIENCE}
+
+\vfill
+{\bfseries\Large Continuous Time Finance 2 - Topics in Life Insurance}
+
+\vfill
+\centerline{\mbox{\includegraphics[width=60mm]{LOGO.jpg}}}
+
+\vfill
+\vspace{5mm}
+
+{\LARGE Felipe Santiago Aguirre Ram\'{i}rez}\\
+{\LARGE Richard Németh}\\
+
+\vspace{15mm}
+
+%%% Název práce  v češtině přesně podle zadání
+{\LARGE\bfseries Compulsory Exercise 1}
+
+\vfill
+
+%%% Název katedry nebo ústavu, kde byla práce oficiálně zadána
+%%% (dle Organizační struktury MFF UK) 
+%%% viz http://www.mff.cuni.cz/toUTF8.cs/fakulta/struktura/sekcem.htm
+Department of Mathematical Sciences
+% Katedra algebry
+% Katedra didaktiky matematiky
+% Katedra matematické analýzy
+% Katedra numerické matematiky
+% Katedra pravděpodobnosti a~matematické statistiky
+% Matematický ústav UK
+
+
+\vfill
+
+\begin{tabular}{rl}
+Course responsible: & Rolf Poulsen \\   %% Jméno a příjmení s~tituly 
+\noalign{\vspace{2mm}}
+Study programmes: & MSc Programme in Actuarial Mathematics
+%Studijní obor: & Obecná matematika\\
+%Studijní obor: & Obecná matematika\\
+%Studijní obor: & Finanční matematika\\
+%Studijní obor: & Matematické metody informační bezpečnosti\\
+\end{tabular}
+
+\vfill
+
+% Zde doplňte rok
+Copenhagen 2016
+\newpage
+
+\end{center}
+\newpage
+\pagenumbering{arabic}
+
+\setlength\parindent{0pt}
+
+{\Large{\textbf{The Stop-Loss Paradox}}}\\
+\vspace{0.2cm}
+
+The questions in this exercise refers to the paper Carr \& Jarrow (1990), ``The Stop-Loss Start-Gain Paradox and Option Valuation: A New Decomposition into Intrinsic and Time Value'', Review of Financial Studies, vol. 3(3), pp. 469-492, which you will find on the course homepage. \\
+
+What do terms ``intrinsic value'' and ``time value'' in the title mean? \\
+\\
+\textbf{Answer.} From decomposition (equation (15) in the paper):
+$$
+c(0)=\max[0,S(0)-XP(0)]+P(0)\cdot \tilde{\mathbf{E}}_0\Lambda_T(X)
+$$
+the term $\max[0,S(0)-XP(0)]$ is called intrinsic value (value of payoff of call option at time zero) and the second term is called time value (as expected local time's present value).\\
+\\
+
+What is the stop-loss start gain strategy (as defined around equation (3) in the paper)? Why is it called that? Why does it seem to contradict usual Black-Scholes replication and pricing?\\
+\\
+\textbf{Answer.} The SLST strategy is portfolio
+\begin{align*}
+h_0(t) &= -\textbf{1}_{(S(t)>XP(t))}X\\
+h_1(t) &= \textbf{1}_{(S(t)>XP(t))},
+\end{align*}
+where $P(t)=e^{-r(T-t)}.$ The strategy basically says to borrow $X$ units from bank account and buy one stock in case we are at-the-money, otherwise do nothing. Being at-the-money basically means that we can only gain from the stock, thus the title of this strategy. The strategy seems to be self-financing, the value of the portfolio is non-negative and with positive probability can be positive, hence this strategy could be an arbitrage possibility in non-arbitrage market. Thus the big paradox.\\
+
+\vspace{0.2cm}
+Design and execute a simulation experiment that analyses the hedge performance of the stop-loss start-gain strategy for a call-option. Analyze the results. \\
+
+Why is the stop-loss start-gain strategy not a paradox; ``where does the rabbit go into the hat''? (You can argue based on insights from your simulation experiment and/or theoretically. Proposition 1 the paper deals with this matter. It uses the Ito-Tanaka(-Meyer) formula, which is beyond our sphere of knowledge -- as of now; Antoine will remedy that. However, you should be able to see what goes wrong when trying to prove the self-financing condition with the standard Ito formula.)
+
+\vspace{0.2cm}
+Computation:
+
+\vspace{0.4cm}
+{\Large{\textbf{A Reflection Theorem}}}\\
+\vspace{0.2cm}
+In this exercise we look at the standard no-dividends Black-Scholes model We put
+
+$$p = 1-\frac{2r}{\sigma^2}$$
+
+and consider a simple claim with a pay-off at time $T$ specified by a pay-off function $g$. The arbitrage-free time-$t$ value is
+
+$$\pi^{g}\left(t\right)=e^{-r\left(T-t\right)}\mathbf{E}^{\mathbb{Q}}_{t}\left(g\left(S\left(T\right)\right)\right)=e^{-r\left(T-t\right)}f\left(S\left(T\right),t\right)$$
+
+where of course $f\left(S\left(t\right),t\right)=\mathbf{E}^{\mathbb{Q}}_{t}\left(g\left(S\left(T\right)\right)\right)$. Let $H > 0$ be a constant and define a new function $\hat{g}$ by
+
+$$\hat{g}\left(x\right)=\left(x/H\right)^{p}g\left(H^{2}/x\right)$$
+
+We call a simple claim with this pay-off function $g$'s \textit{reflected claim} (don't worry why).
+Define the process $Z$ by
+
+$$Z\left(t\right) = \left(\frac{S\left(t\right)}{H}\right)^{p}$$
+
+Show that $Z\left(t\right)/Z\left(0\right)$ is a positive, mean-1 $\mathbb{Q}-martingale$.\\
+\\
+\textbf{Answer.} The dynamics of $Z(t)/Z(0)$ under $\mathbb{Q}$:
+\begin{align*}
+\text{d}\frac{Z(t)}{Z(0)} &= \text{d}\left(\frac{S(t)}{S(0)}\right)^p=\frac{1}{S(0)^p}\left(pS(t)^{p-1}\text{d}S(t)+\frac{p(p-1)}{2}S(t)^{p-2}(\text{d}S(t))^2\right)\\
+&=\frac{S(t)^p}{S(0)^p}\left(pr+\frac{1}{2}p(p-1)\sigma^2\right)\text{d}t+[\ldots]\text{d}W(t).
+\end{align*}
+But
+$$
+pr+\frac{1}{2}p(p-1)\sigma^2=r-\frac{2r^2}{\sigma^2}-\frac{1}{2}\left(1-\frac{2r}{\sigma^2}\right)\frac{2r}{\sigma^2}\sigma^2=0,
+$$
+hence the $\text{d}t$ term vanishes, so $Z(t)/Z(0)$ is martingale. Now using the martingale property:
+$$
+\mathbf{E}^{\mathbb{Q}}\left[\frac{Z(t)}{Z(0)}\right]=\left.\mathbf{E}^{\mathbb{Q}}\left[\frac{Z(t)}{Z(0)}\right|\mathcal{F}_0\right]=\frac{Z(0)}{Z(0)}=1
+$$
+and since $S(t)>0$ then also $Z(t)>0$.\\
+\\
+This means that
+
+$$\frac{d\mathbb{Q}^{Z}}{d\mathbb{Q}}=\frac{Z\left(T\right)}{Z\left(0\right)}$$
+
+defines a probability measure $\mathbb{Q}^{Z}\sim \mathbb{Q}$. Show that
+
+$$\pi^{\hat{g}}\left(t\right)=e^{-r\left(T-t\right)}\left(\frac{S\left(t\right)}{H}\right)^{p}\mathbf{E}^{\mathbb{Q}^{Z}}_{t}\left(g\left(\frac{H^{2}}{S\left(T\right)}\right)\right)$$
+\textbf{Answer.}
+Put $Y\left(t\right) = H^{2}/S\left(t\right)$. Show that
+
+$$dY\left(t\right)=rY\left(t\right)dt+\sigma Y\left(t\right)\left(-dW^{\mathbb{Q}^{Z}}\left(t\right)\right)$$
+
+where $W^{\mathbb{Q}^{Z}}$ is a $\mathbb{Q}^{Z}$-Brownian motion.
+
+This means the distribution of $Y$ under $\mathbb{Q}^{Z}$ is the same as the distribution of $S$ under $\mathbb{Q}$.
+
+Use this to argue that
+
+$$\pi^{\hat{g}}\left(t\right)=e^{-r\left(T-t\right)}\left(\frac{S\left(t\right)}{H}\right)^{p}f\left(\frac{H^{2}}{S\left(t\right)},t\right)$$
+
+This result linking the original claim and its reflected version has applications in pricing and hedging of barrier options, see Poulsen (2006) ``Barrier Options and Their Static Hedges: Simple Derivations and Extensions'', Quantitative Finance, vol. 6(4), pp 327-335.
+
+\vspace{0.2cm}
+Computation:
+
+
+\vspace{0.4cm}
+{\Large{\textbf{Options on Coupon-Bearing Bonds}}}\\
+\vspace{0.2cm}
+
+The trick in the exercise was first used in Jamshidian (1989), ``An exact bond option pricing formula'', Journal of Finance, vol. 44(1), pp 205-209. Also in this exercise we consider the Vasicek model, and let $A$ and $B$ denote the functions such that $P\left(t,T\right)=exp\left(A\left(t,T\right)-B\left(t,T\right)r\left(t\right)\right)$. We now look at a \textit{coupon bond} that makes deterministic positive payments $\alpha_1, \cdots, \alpha_N$ at dates $T_1, \cdots, T_N$. Clearly the price of this coupon bond is
+
+$$\pi^{C}\left(t\right)=\sum_{i|T_i >t}\alpha_i P\left(t, T_i\right)$$
+
+(It is strict inequality, ``>'', to keep in line with prices always being ex-dividend.) The last ingredient we need is a (positive) strike-$K$, expiry-$T$ European call-option on the coupon bond.
+
+Show that there exists a unique $r^{\ast} \in\mathbb{R}$ such that $\pi^{C}\left(T\right)\geq K$ if and only if $r\left(T\right)\leq r^{\ast}$.
+
+Define the adjusted strikes via $K_i = exp\left(A\left(T, T_i\right)-B\left(T, T_i\right)r^{\ast}\right)$
+
+Show that the pay-off of the call can be written as 
+
+$$\left(\pi^{C}\left(T\right)-K\right)^{+}=\sum_{i|T_i > T}\alpha_i\left(P\left(T,T_i\right)-K_i\right)^{+}$$
+
+and explain how (given results known from for instance Bjork) this leads to a closed-form (up to knowledge of $r^{\ast}$) expression for the price of the call on the coupon bond.
+Consider a option with $K = 4.5$, $T = 1$, $N = 5$, $T_i = i+1$, and $\alpha_i = 1$ for all $i$, and let other parameters be as in the previous exercise. Calculate the time-0 price of the call. (Numbers, please; this will involve solving an equation numerically.)
+
+\vspace{0.2cm}
+Computation:
+
+\vspace{0.4cm}
+{\Large{\textbf{A Two-Factor Interest Rate Model}}}\\
+\vspace{0.2cm}
+
+In this exercise we look at what is often called the two-factor Hull-White model.
+
+
+Suppose the short rate has the form $r(t) = X_1\left(t\right)+X_2\left(t\right)$, where the X's follow Vasicek-type (also called Ornstein-Uhlenbeck) processes, i.e. $dX_{i}\left(t\right) = k_i\left(\theta_i X_i\left(t\right)\right)dt + \sigma_i dW_{i}\left(t\right)$, and $W_{1}$ and $W_{2}$ are independent Q-Brownian motions.
+
+
+Explain briefly how results from Bjork makes it easy to price but zero-coupon bonds and call and put options on these. Does the Jamshidian's trick from the previous exercise for pricing coupon-bearing bonds work in this model?
+
+What are correlations between changes in zero-coupon yields over short time horizons? What are these correlations in the standard Vasicek model?
+
+
+The formulation above of the model does not look too ``sexy''. To fix that, show that we can write it as
+
+$$dr\left(t\right)=\tilde{k}\left(\tilde{\theta}\left(t\right)r\left(t\right)\right)dt+\tilde{\sigma}d\tilde{W}\left(t\right)$$
+
+where $\tilde{\theta}$ is an Ornstein-Uhlenbeck process. (So were clear: Your job is to write down explicitly what the things with $\tilde{.}$'s are.) This is known as rotating the model. You could ``sell'' $\tilde{\theta}$ as a ``target rate'' controlled by a central bank (depending on the general state of the economy), or give the model a ``stochastic market price of risk'' interpretation.
+
+\vspace{0.2cm}
+Computation:
+
+
+\end{document}
